@@ -37,6 +37,12 @@ public class RunePouchUI {
         runepouchText.setHidden(true);
         runepouchText.revalidate();
       } else {
+        if (runePouchConfig.customRunePouchHeaderText() != null && runePouchConfig.customRunePouchHeaderText().length() > 0) {
+          runepouchText.setText(runePouchConfig.customRunePouchHeaderText());
+        } else {
+          runepouchText.setText("Load-outs:");
+        }
+
         runepouchText.setHidden(false);
         runepouchText.revalidate();
         headerHeight = runepouchText.getHeight();

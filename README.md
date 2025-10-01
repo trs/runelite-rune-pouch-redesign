@@ -1,9 +1,9 @@
 # Rune Pouch Load-out Redesign
 
-![Rune Pouch Load-out UI](./docs/pouch.png)
+![Rune Pouch load-out UI](./docs/cover.png)
 
 ## Customize
 
-Enable custom loadout names
+Various options to tweak the layout
 
-![Rune Pouch Custom names](./docs/names.png)
+![Rune Pouch options](./docs/options.png)

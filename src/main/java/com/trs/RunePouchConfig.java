@@ -38,6 +38,17 @@ public interface RunePouchConfig extends Config
 	default boolean hideRunePouchLoadoutHeader() {
 			return true;
 	}
+	
+	@ConfigItem(
+		position = 2,
+		keyName = "customRunePouchHeaderText",
+		name = "Custom Load-outs Header Text",
+		description = "",
+		section = sectionSettings
+	)
+	default String customRunePouchHeaderText() {
+			return "Load-outs:";
+	}
 
 	@ConfigSection(
 		position = 1,

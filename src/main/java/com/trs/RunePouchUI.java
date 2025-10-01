@@ -18,9 +18,9 @@ public class RunePouchUI {
   private final int LOADOUT_COUNT = 10;
 
   private final int getLoadoutHeight() {
-    if ( runePouchConfig.hideRunePouchNames()) return 32;
+    if (runePouchConfig.hideRunePouchNames()) return 32;
     else if (runePouchConfig.enableCustomNames()) return 48;
-    else return 56;
+    else return 54;
   }
 
   @Inject
@@ -48,16 +48,16 @@ public class RunePouchUI {
     if (runepouchTop != null) {
       runepouchTopHeight = runepouchTop.getHeight();
     }
-
+    
     var runepouchLoadoutContainer = client.getWidget(InterfaceID.Bankside.RUNEPOUCH_LOADOUT_CONTAINER);
     if (runepouchLoadoutContainer != null) {
       runepouchLoadoutContainer.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
       runepouchLoadoutContainer.setOriginalY(48 + headerHeight);
 
       runepouchLoadoutContainer.setHeightMode(WidgetSizeMode.MINUS);
-      runepouchLoadoutContainer.setOriginalHeight(48 + headerHeight);
-
-      runepouchLoadoutContainer.setScrollHeight(getLoadoutHeight() * LOADOUT_COUNT + (LOADOUT_PADDING * LOADOUT_COUNT));
+      runepouchLoadoutContainer.setOriginalHeight(52 + headerHeight);
+      
+      runepouchLoadoutContainer.setScrollHeight(getLoadoutHeight() * LOADOUT_COUNT + (LOADOUT_PADDING * (LOADOUT_COUNT - 1)));
       runepouchLoadoutContainer.revalidate();
     }
     
@@ -118,9 +118,9 @@ public class RunePouchUI {
         if (runePouchConfig.enableCustomNames()) {
           runepouchName.setHidden(true);
 
-          nameHeight = 8 + LOADOUT_PADDING;
+          nameHeight = 16;
         } else {
-          nameHeight = runepouchName.getHeight() + LOADOUT_PADDING;
+          nameHeight = runepouchName.getHeight() + 2;
         }
         
         runepouchName.revalidate();
@@ -130,25 +130,23 @@ public class RunePouchUI {
     var runepouchLoad = client.getWidget(loadWidgetID);
     if (runepouchLoad != null) {
       runepouchLoad.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
-      runepouchLoad.setOriginalY(nameHeight + LOADOUT_PADDING);
+      runepouchLoad.setOriginalY(nameHeight);
       runepouchLoad.revalidate();
     }
-
-    var loadoutStartingHeight = runePouchConfig.hideRunePouchLoadoutHeader() ? 148 : 132;
 
     var runepouchLoadout = client.getWidget(loadoutWidgetID);
     if (runepouchLoadout != null) {
       runepouchLoadout.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
       runepouchLoadout.setOriginalY(getLoadoutHeight() * index + (LOADOUT_PADDING * index));
-      runepouchLoadout.setHeightMode(WidgetSizeMode.MINUS);
-      runepouchLoadout.setOriginalHeight(loadoutStartingHeight - nameHeight - LOADOUT_PADDING);
+      runepouchLoadout.setHeightMode(WidgetSizeMode.ABSOLUTE);
+      runepouchLoadout.setOriginalHeight(getLoadoutHeight());
       runepouchLoadout.revalidate();
 
       for (int i = 0; i < runepouchLoadout.getChildren().length; i++) {
         var child = runepouchLoadout.getChild(i);
         if (child != null) {
           child.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
-          child.setOriginalY(nameHeight + LOADOUT_PADDING);
+          child.setOriginalY(nameHeight);
           child.revalidate();
         }
       }
@@ -167,8 +165,8 @@ public class RunePouchUI {
         nameCustomTextBgWidget.setOriginalX(0);
         nameCustomTextBgWidget.setOriginalY(0);
 
-        nameCustomTextBgWidget.setHeightMode(WidgetSizeMode.MINUS);
-        nameCustomTextBgWidget.setOriginalHeight(runePouchConfig.hideRunePouchLoadoutHeader() ? 34 : 33);
+        nameCustomTextBgWidget.setHeightMode(WidgetSizeMode.ABSOLUTE);
+        nameCustomTextBgWidget.setOriginalHeight(nameHeight);
         nameCustomTextBgWidget.setWidthMode(WidgetSizeMode.MINUS);
         nameCustomTextBgWidget.setOriginalWidth(0);
         nameCustomTextBgWidget.setTextColor(0x473F35);
@@ -196,10 +194,10 @@ public class RunePouchUI {
         nameCustomTextWidget.setOriginalX(2);
         nameCustomTextWidget.setOriginalY(2);
 
-        nameCustomTextWidget.setHeightMode(WidgetSizeMode.MINUS);
-        nameCustomTextWidget.setOriginalHeight(40);
+        nameCustomTextWidget.setHeightMode(WidgetSizeMode.ABSOLUTE);
+        nameCustomTextWidget.setOriginalHeight(nameHeight - 4);
         nameCustomTextWidget.setWidthMode(WidgetSizeMode.MINUS);
-        nameCustomTextWidget.setOriginalWidth(0);
+        nameCustomTextWidget.setOriginalWidth(4);
 
         nameCustomTextWidget.setFontId(FontID.BOLD_12);
         nameCustomTextWidget.setFontId(FontID.PLAIN_11);

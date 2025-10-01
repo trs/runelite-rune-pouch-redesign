@@ -168,7 +168,7 @@ public class RunePouchUI {
         nameCustomTextBgWidget.setOriginalY(0);
 
         nameCustomTextBgWidget.setHeightMode(WidgetSizeMode.MINUS);
-        nameCustomTextBgWidget.setOriginalHeight(34);
+        nameCustomTextBgWidget.setOriginalHeight(runePouchConfig.hideRunePouchLoadoutHeader() ? 34 : 33);
         nameCustomTextBgWidget.setWidthMode(WidgetSizeMode.MINUS);
         nameCustomTextBgWidget.setOriginalWidth(0);
         nameCustomTextBgWidget.setTextColor(0x473F35);

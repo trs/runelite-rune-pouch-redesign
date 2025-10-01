@@ -1,5 +1,9 @@
 # Rune Pouch Load-out Redesign
 
-Condences the rune pouch loadouts, removing the loadout names
-
 ![Rune Pouch Load-out UI](./docs/pouch.png)
+
+## Customize
+
+Enable custom loadout names
+
+![Rune Pouch Custom names](./docs/names.png)

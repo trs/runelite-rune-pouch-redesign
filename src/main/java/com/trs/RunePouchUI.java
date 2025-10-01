@@ -12,6 +12,13 @@ public class RunePouchUI {
   private final Client client;
   private final RunePouchConfig runePouchConfig;
 
+  private final int LOADOUT_PADDING = 4;
+  private final int LOADOUT_COUNT = 10;
+
+  private final int getLoadoutHeight() {
+    return runePouchConfig.hideRunePouchNames() ? 32 : 56;
+  }
+
   @Inject
   public RunePouchUI(Client client, RunePouchConfig runePouchConfig) {
     this.client = client;
@@ -44,9 +51,9 @@ public class RunePouchUI {
       runepouchLoadoutContainer.setOriginalY(48 + headerHeight);
 
       runepouchLoadoutContainer.setHeightMode(WidgetSizeMode.MINUS);
-      runepouchLoadoutContainer.setOriginalHeight(48 - headerHeight);
+      runepouchLoadoutContainer.setOriginalHeight(48 + headerHeight);
 
-      runepouchLoadoutContainer.setScrollHeight(340);
+      runepouchLoadoutContainer.setScrollHeight(getLoadoutHeight() * LOADOUT_COUNT + (LOADOUT_PADDING * LOADOUT_COUNT));
       runepouchLoadoutContainer.revalidate();
     }
     
@@ -87,9 +94,7 @@ public class RunePouchUI {
   }
 
   private void redrawLoadout(int nameWidgetID, int loadWidgetID, int loadoutWidgetID, int index) {
-    var padding = 2;
     var nameHeight = 0;
-    var loadoutHeight = 32;
     
     var runepouchName = client.getWidget(nameWidgetID);
     if (runepouchName != null) {
@@ -97,7 +102,7 @@ public class RunePouchUI {
       runepouchName.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
       runepouchName.setOriginalY(0);
 
-        nameHeight = runepouchName.getHeight();
+      nameHeight = runepouchName.getHeight();
 		  if (runePouchConfig.hideRunePouchNames()) {
         runepouchName.setHidden(true);
         runepouchName.revalidate();
@@ -107,31 +112,32 @@ public class RunePouchUI {
         runepouchName.setHidden(false);
         runepouchName.revalidate();
 
-        nameHeight = runepouchName.getHeight() + padding;
-        loadoutHeight = 56;
+        nameHeight = runepouchName.getHeight() + LOADOUT_PADDING;
       }
     }
 
     var runepouchLoad = client.getWidget(loadWidgetID);
     if (runepouchLoad != null) {
       runepouchLoad.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
-      runepouchLoad.setOriginalY(nameHeight + padding);
+      runepouchLoad.setOriginalY(nameHeight + LOADOUT_PADDING);
       runepouchLoad.revalidate();
     }
+
+    var loadoutStartingHeight = runePouchConfig.hideRunePouchLoadoutHeader() ? 148 : 132;
 
     var runepouchLoadout = client.getWidget(loadoutWidgetID);
     if (runepouchLoadout != null) {
       runepouchLoadout.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
-      runepouchLoadout.setOriginalY(loadoutHeight * index + (padding * index));
+      runepouchLoadout.setOriginalY(getLoadoutHeight() * index + (LOADOUT_PADDING * index));
       runepouchLoadout.setHeightMode(WidgetSizeMode.MINUS);
-      runepouchLoadout.setOriginalHeight(148 - nameHeight - padding);
+      runepouchLoadout.setOriginalHeight(loadoutStartingHeight - nameHeight - LOADOUT_PADDING);
       runepouchLoadout.revalidate();
 
       for (int i = 0; i < runepouchLoadout.getChildren().length; i++) {
         var child = runepouchLoadout.getChild(i);
         if (child != null) {
           child.setYPositionMode(WidgetPositionMode.ABSOLUTE_TOP);
-          child.setOriginalY(nameHeight + padding);
+          child.setOriginalY(nameHeight + LOADOUT_PADDING);
           child.revalidate();
         }
       }
